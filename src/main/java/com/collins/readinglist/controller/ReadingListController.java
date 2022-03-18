@@ -5,10 +5,9 @@ import com.collins.readinglist.repository.ReadingListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class ReadingListController {
 
     private final ReadingListRepository repository;
 
-    @GetMapping(value = "/{reader}")
+    @RequestMapping(value = "/{reader}", method=RequestMethod.GET)
     public String readersBooks(@PathVariable("reader") String reader, Model model) {
 
         List<Book> readingList = repository.findByReader(reader);
@@ -32,8 +31,8 @@ public class ReadingListController {
         return "readingList";
     }
 
-    @PostMapping(value = "/{reader")
-    public String addToReadingList(@PathVariable String reader, Book book) {
+    @RequestMapping(value = "/{reader}", method=RequestMethod.POST)
+    public String addToReadingList(@PathVariable("reader") String reader, Book book) {
         book.setReader(reader);
         repository.save(book);
         return "redirect:/{reader}";
