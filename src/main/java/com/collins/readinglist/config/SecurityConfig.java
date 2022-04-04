@@ -17,12 +17,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").access("hasRole('READER')")
-                .antMatchers("/**").permitAll()
+                .antMatchers("/api/v1/").access("hasRole('READER')")
+                .antMatchers("/api/v1/**").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true");
+                .loginPage("/api/v1/login")
+                .failureUrl("/api/v1/login?error=true");
     }
 
     @Override
